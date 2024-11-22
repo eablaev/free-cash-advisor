@@ -2,12 +2,28 @@
 import { useState } from "react";
 
 
+
+
 const questions = [
     {
         id: 1,
         text: "How much free cash do you have to invest?",
         type: "number",
         key: "freeCash",
+        next: () => 2, // No next question
+    },
+    {
+        id: 2,
+        text: "Hoe much of a high interest debt you have?",
+        type: "number",
+        key: "highInterestDebt",
+        next: (userData) => (userData.freeCash <= userData.highInterestDebt ? 4 : 3)
+    },
+    {
+        id: 0,
+        text: "Whats your monthly expenses?",
+        type: "number",
+        key: "monthlyExpenses",
         next: () => 2, // No next question
     },
     {
@@ -31,18 +47,27 @@ const questions = [
         key: null,
         next: null,
     },
+    {
+        id: 4,
+        text: "We recommend covering you debt. Thanks!",
+        type: "end",
+        key: null,
+        next: null,
+    },
    
 ];
 
 
-
-
 function Form ({userDispatch, userData}) {
     const [currentQuestionId, setCurrentQuestionId] = useState(1);
+    const [inputValue, setInputValue] = useState('')
+    
     const currentQuestion = questions.find((q) => q.id === currentQuestionId);
 
+
     function handleNext() {
-        setCurrentQuestionId(currentQuestion.next)
+        setCurrentQuestionId(currentQuestion.next(userData))
+        setInputValue('')
     }
 
     return (
@@ -50,7 +75,18 @@ function Form ({userDispatch, userData}) {
         {currentQuestion ? (
             <div>
                 <label> {currentQuestion.text}
-                    <input type={currentQuestion.type} />
+                    <input
+                        value={inputValue} 
+                        type={currentQuestion.type} 
+                        onChange={
+                            (e) => {
+                                userDispatch({ type: currentQuestion.key, payload: e.target.value}) 
+                                setInputValue(e.target.value)
+                                console.log(userData.freeCash)
+                            }
+                            
+                    }
+                    />
                 </label>
             </div>
         ) : (

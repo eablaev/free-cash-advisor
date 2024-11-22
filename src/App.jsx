@@ -9,22 +9,13 @@ import Form from './components/Form';
 const initialUserData = {
     age: '',
     selfEmployed: false,
-    freeCash: 0,
-    highInterestDebt: 0
+    freeCash:0,
+    highInterestDebt: 0,
+    monthlyExpenses: 0
 }
 
 function userDataReducer(state, action) {
-    switch (action.type) {
-        case 'SET_AGE':
-            return { ...state, age: action.payload};
-        case 'TOGGLE_SELF_EMPLOYED':
-            return { ...state, selfEmployed: !state.selfEmployed }
-        case 'SET_FREE_CASH':
-            return { ...state, freeCash: action.payload}
-        default:
-             return state
-    }
-
+    return { ...state, [action.type]: action.payload}
 }
 
 
