@@ -14,17 +14,29 @@ const questions = [
     },
     {
         id: 2,
-        text: "Hoe much of a high interest debt you have?",
+        text: "How much of a high-interest debt do you have?",
         type: "number",
         key: "highInterestDebt",
-        next: (userData) => (userData.freeCash <= userData.highInterestDebt ? 4 : 3)
+        next: (userData) => (userData.freeCash <= userData.highInterestDebt ? 3 : 4),
+        process: (userData, userDispatch) => {
+            const availableToDeploy = userData.freeCash - userData.highInterestDebt;
+            userDispatch({ type: 'availableToDeploy', payload: availableToDeploy });
+        },
     },
     {
-        id: 0,
+        id: 3,
+        text: "We recommend covering you debt. Thanks!",
+        type: null,
+        key: null,
+        next: null,
+    },
+    
+    {
+        id: 4,
         text: "Whats your monthly expenses?",
         type: "number",
         key: "monthlyExpenses",
-        next: () => 2, // No next question
+        next: (userData) => userData 
     },
     {
         id: 0,
@@ -40,20 +52,7 @@ const questions = [
         key: "selfEmployed",
         next: () => 4,
     },
-    {
-        id: 3,
-        text: "We recommend waiting until you're 18 to invest. Thanks!",
-        type: "end",
-        key: null,
-        next: null,
-    },
-    {
-        id: 4,
-        text: "We recommend covering you debt. Thanks!",
-        type: "end",
-        key: null,
-        next: null,
-    },
+  
    
 ];
 
@@ -66,8 +65,13 @@ function Form ({userDispatch, userData}) {
 
 
     function handleNext() {
+        if(currentQuestion.process) {
+            currentQuestion.process(userData, userDispatch)
+        }
+        
         setCurrentQuestionId(currentQuestion.next(userData))
         setInputValue('')
+        
     }
 
     return (
@@ -75,18 +79,17 @@ function Form ({userDispatch, userData}) {
         {currentQuestion ? (
             <div>
                 <label> {currentQuestion.text}
-                    <input
+                    {currentQuestion.type ? <input
                         value={inputValue} 
                         type={currentQuestion.type} 
                         onChange={
                             (e) => {
                                 userDispatch({ type: currentQuestion.key, payload: e.target.value}) 
                                 setInputValue(e.target.value)
-                                console.log(userData.freeCash)
                             }
                             
                     }
-                    />
+                    /> : ''}
                 </label>
             </div>
         ) : (

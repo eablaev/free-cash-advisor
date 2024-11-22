@@ -5,6 +5,8 @@ function Result ({userData}) {
             <p>Age: {userData.age}</p>
             <p>Self-Employed: {userData.selfEmployed ? "Yes" : "No"}</p>
             <p>Free Cash: {userData.freeCash}</p>
+            <p>High interest Debpt: {userData.highInterestDebt}</p>
+            <p>Available to deploy: {userData.availableToDeploy}</p>
         </>
     );
 }

@@ -9,6 +9,7 @@ import Form from './components/Form';
 const initialUserData = {
     age: '',
     selfEmployed: false,
+    availableToDeploy: 0,
     freeCash:0,
     highInterestDebt: 0,
     monthlyExpenses: 0
