@@ -1,0 +1,36 @@
+
+.resultContainer {
+    border: 1px solid red;
+  
+}
+
+.resultItem {
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    display: flex;
+    align-items: baseline;
+    gap: .5rem;
+
+    /* background-color: #f9f9f9; */
+}
+
+/* .resultItem h4 {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 0.2rem;
+}
+
+.resultItem h5 {
+    font-size: 1rem;
+    margin: 0.2rem 0;
+    color: #555;
+} */
+
+
+.img {
+    height: 100px;
+    width: 100px;
+    background-color: white;
+}

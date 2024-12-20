@@ -17,9 +17,9 @@ const initialUserData = {
     monthlyExpenses: 100,
     hasRetirementAccount: false,
     retirementAccountTypes: ["Roth IRA", "401k"],
-    investmentGoals: [],
+    investmentGoals: 'Long term investing',
     hasHSA: false,
-    riskTolerance: ''
+    riskTolerance: 'High'
 }
 
 function userDataReducer(state, action) {
@@ -31,7 +31,7 @@ function userDataReducer(state, action) {
 
 function App() {
     const [userData, userDispatch] = useReducer(userDataReducer, initialUserData);
-    const [mainSection, setMainSection] = useState('intakeForm')
+    const [mainSection, setMainSection] = useState('result')
 
     return (
         <>
@@ -47,12 +47,9 @@ function App() {
                           setMainSection={setMainSection}
                       />
                     </div>
-                ) : mainSection === 'result' ? (
-                    <div className="resultsContainer">
-                        <Result userData={userData}/>
-                    </div>
+                ) : mainSection === 'result' ? <Result userData={userData}/> 
 
-                ) : <div><h2>Ups, something went wrong</h2></div>
+                 : <div><h2>Ups, something went wrong</h2></div>
             }
               
                
