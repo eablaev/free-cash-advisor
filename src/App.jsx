@@ -1,5 +1,5 @@
 
-import { useReducer } from 'react';
+import { useReducer, useState } from 'react';
 import './App.css'
 
 import Result from './components/Result';
@@ -7,12 +7,19 @@ import Form from './components/Form';
 
 
 const initialUserData = {
-    age: '',
+    age: 31,
     selfEmployed: false,
+    sideHustle: false,
     availableToDeploy: 0,
-    freeCash:0,
+    freeCash: 0,
+    emergencyFund: false,
     highInterestDebt: 0,
-    monthlyExpenses: 0
+    monthlyExpenses: 100,
+    hasRetirementAccount: false,
+    retirementAccountTypes: ["Roth IRA", "401k"],
+    investmentGoals: [],
+    hasHSA: false,
+    riskTolerance: ''
 }
 
 function userDataReducer(state, action) {
@@ -21,8 +28,10 @@ function userDataReducer(state, action) {
 
 
 
+
 function App() {
-   const [userData, userDispatch] = useReducer(userDataReducer, initialUserData);
+    const [userData, userDispatch] = useReducer(userDataReducer, initialUserData);
+    const [mainSection, setMainSection] = useState('intakeForm')
 
     return (
         <>
@@ -30,15 +39,23 @@ function App() {
                 <h1>Free Cash Advisor</h1>
             </div>
             <div className="mainContent">
-                <div className="formContainer">
-                    <Form 
-                        userDispatch={userDispatch} 
-                        userData={userData}
-                    />
-                </div>
-                <div className="resultsContainer">
-                    <Result userData={userData}/>
-                </div>
+                {mainSection === 'intakeForm' ? (
+                    <div className="formContainer">
+                      <Form 
+                          userDispatch={userDispatch} 
+                          userData={userData}
+                          setMainSection={setMainSection}
+                      />
+                    </div>
+                ) : mainSection === 'result' ? (
+                    <div className="resultsContainer">
+                        <Result userData={userData}/>
+                    </div>
+
+                ) : <div><h2>Ups, something went wrong</h2></div>
+            }
+              
+               
                
             </div>
             <div className="footer"></div>

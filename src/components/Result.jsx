@@ -1,12 +1,20 @@
 function Result ({userData}) {
     return (
         <>
-            <h2>Results</h2>
-            <p>Age: {userData.age}</p>
-            <p>Self-Employed: {userData.selfEmployed ? "Yes" : "No"}</p>
-            <p>Free Cash: {userData.freeCash}</p>
-            <p>High interest Debpt: {userData.highInterestDebt}</p>
-            <p>Available to deploy: {userData.availableToDeploy}</p>
+            {Object.entries(userData).map(([key, value], index) => (
+                <div key={index}>
+                    <h4>{key}:</h4>
+                    {Array.isArray(value) ? (
+                        value.map((item,index) => (
+                            <h5 key={index}>{item}</h5>
+                        ))
+                    ) : typeof value === "boolean"  ? (
+                        <h5>{value ? 'Yes' : 'No'}</h5>    
+                    ) : 
+                    <h5>{value}</h5> }
+                </div>
+            ))}
+            
         </>
     );
 }
